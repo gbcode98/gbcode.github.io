@@ -1,2 +1,2 @@
-# gbcode.github.io
-Personal website gbcode.github.io
+# Personal webpage
+Link: https://gbcode.github.io
