@@ -37,6 +37,9 @@
         .glow-text {
             text-shadow: 0 0 10px #a855f7, 0 0 20px #9333ea;
         }
+        .glow-name {
+            text-shadow: 0 0 10px #eaeaeb, 0 0 20px #fdfdfd;
+        }
     </style>
 </head>
 <body class="font-sans" onload="AOS.init();">
@@ -44,45 +47,60 @@
     
     <!-- Novo Cabeçalho Animado -->
     <header class="h-screen flex flex-col justify-center items-center text-center relative">
-        <h1 class="text-5xl font-bold text-purple-500 glow-text">Gabriel Carlos</h1>
-        <p id="typing-text" class="text-2xl text-gray-300 mt-4"></p>
-        <div class="scroll-down text-purple-500 text-2xl">
+        <h1 class="text-5xl font-bold text-purple-500 glow-text">
+            I'm <span id="typing-name"></span>
+        </h1>
+        <p id="typing-text" class="text-2xl text-gray-300 glow-name mt-4"></p>
+        <div class="scroll-down text-purple-500 text-2xl glow-text">
             <i class="fas fa-chevron-down"></i>
         </div>
     </header>
+
+    
     
     <script>
-        const roles = ["Engenheiro de Dados", "Desenvolvedor", "Analista de Dados"];
-        let index = 0;
-        let charIndex = 0;
-        const typingText = document.getElementById("typing-text");
+    const roles = ["Data Engineer", "Data Analyst", "Developer"];
+    let index = 0;
+    let charIndex = 0;
+    const typingText = document.getElementById("typing-text");
+    let isDeleting = false;
 
-        function typeEffect() {
-            if (charIndex < roles[index].length) {
-                typingText.innerHTML += roles[index].charAt(charIndex);
-                charIndex++;
-                setTimeout(typeEffect, 100);
-            } else {
-                setTimeout(eraseEffect, 2000);
-            }
+    function typeEffect() {
+        if (charIndex < roles[index].length && !isDeleting) {
+            typingText.innerHTML += roles[index].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeEffect, 100);
+        } else if (charIndex > 0 && isDeleting) {
+            typingText.innerHTML = roles[index].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(typeEffect, 50);
+        } else {
+            isDeleting = !isDeleting;
+            if (!isDeleting) index = (index + 1) % roles.length;
+            setTimeout(typeEffect, 1000);
         }
+    }
 
-        function eraseEffect() {
-            if (charIndex > 0) {
-                typingText.innerHTML = roles[index].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(eraseEffect, 50);
-            } else {
-                index = (index + 1) % roles.length;
-                setTimeout(typeEffect, 500);
-            }
-        }
-
+    document.addEventListener("DOMContentLoaded", () => {
         typeEffect();
+        typeName();
+    });
+
+    const nameElement = document.getElementById("typing-name");
+    const nameText = "Gabriel - gbcode98";
+    let nameIndex = 0;
+
+    function typeName() {
+        if (nameIndex < nameText.length) {
+            nameElement.textContent += nameText.charAt(nameIndex);
+            nameIndex++;
+            setTimeout(typeName, 150); 
+        }
+    }
     </script>
 
 <section id="sobre" class="p-10 text-center" data-aos="fade-up">
-    <h2 class="text-3xl font-bold text-purple-500 mb-6">Sobre Mim/About me</h2>
+    <h2 class="text-3xl font-bold text-purple-500 glow-text mb-6">Sobre Mim/About me</h2>
     <div class="bg-gray-900 border border-purple-500 p-6 rounded-lg shadow-md hover:shadow-purple-500/50 transition duration-300 max-w-2xl mx-auto">
         <!-- Versão em Português -->
         <div class="text-gray-300 text-lg space-y-3">
@@ -117,7 +135,7 @@
 
 
 <section id="habilidades" class="p-10 text-center" data-aos="fade-up">
-    <h2 class="text-3xl font-bold text-purple-500 mb-6">Habilidades/Skills</h2>
+    <h2 class="text-3xl font-bold text-purple-500 glow-text mb-6">Habilidades/Skills</h2>
     <div class="bg-gray-900 border border-purple-500 p-6 rounded-lg shadow-md hover:shadow-purple-500/50 transition duration-300 max-w-2xl mx-auto">
         <!-- Versão em Português -->
         <ul class="text-gray-300 space-y-2 text-lg">
@@ -145,7 +163,7 @@
 </section>
 
 <section id="escolaridade" class="p-10 text-center" data-aos="fade-up">
-    <h2 class="text-3xl font-bold text-purple-500 mb-6">Escolaridade/Education</h2>
+    <h2 class="text-3xl font-bold text-purple-500 glow-text mb-6">Escolaridade/Education</h2>
     <div class="bg-gray-900 border border-purple-500 p-6 rounded-lg shadow-md hover:shadow-purple-500/50 transition duration-300 max-w-2xl mx-auto">
         <!-- Versão em Português -->
         <p class="text-gray-300 text-lg flex items-center justify-center">
@@ -170,7 +188,7 @@
 
 
 <section id="projetos" class="p-10 text-center" data-aos="fade-up">
-<h2 class="text-3xl font-bold text-purple-500">Projetos/Projects</h2>
+<h2 class="text-3xl font-bold text-purple-500 glow-text">Projetos/Projects</h2>
 <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
 
     <!-- Projeto 1 -->
@@ -230,7 +248,7 @@
 
 
 <section id="contato" class="p-10 text-center" data-aos="fade-up">
-<h2 class="text-3xl font-bold text-purple-500 mb-6">Contato/Contact</h2>
+<h2 class="text-3xl font-bold text-purple-500 glow-text mb-6">Contato/Contact</h2>
 <div class="bg-gray-900 border border-purple-500 p-6 rounded-lg shadow-md hover:shadow-purple-500/50 transition duration-300 max-w-2xl mx-auto">
     
     <!-- Versão em Português -->
@@ -275,9 +293,9 @@
             }
         });
     </script>
-</body>
-</html>
 
 <footer class="p-5 text-center bg-black text-white mt-10">
-    <p>&copy; 2025 Meu Portfólio gbcode98.Todos os direitos reservados.</p>
+    <p>&copy; 2025 Meu Portfólio gbcode98. Todos os direitos reservados.</p>
 </footer>
+</body>
+</html>
